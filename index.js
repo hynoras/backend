@@ -1,28 +1,27 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
-// const userRoutes = require('./routes/userRoutes');
+const db = require("./config");
+const userRoute = require('./routes/userRoute');
 
 const app = express();
 
-// app.use(bodyParser.json());
-// app.use('/user', userRoutes);
-
-const connection = mysql.createConnection({
-    host: 'db4free.net',
-    user: 'quangdb',
-    password: 'Quang23022002',
-    database: 'quangdb'
-  });
+app.use(bodyParser.json());
+app.use('/user', userRoute);
   
-  // Connect to MySQL database
-  connection.connect((err) => {
-    if (err) {
-      console.error('Error connecting to database: ' + err.stack);
-      return;
-    }
-    console.log('Connected to database as id ' + connection.threadId);
-  });
+// Connect to MySQL database
+db.query('SELECT 1 + 1', (error, results, fields) => {
+  if (error) throw error;
+    console.log('Connected to MySQL!');
+});
+
+app.get("/check-connection", (req, res) => {
+  if (db.state === "authenticated") {
+    res.json({ message: "MySQL connection is established" });
+  } else {
+    res.json({ message: "MySQL connection is not established" });
+  }
+});
 
 // Start the server
 const PORT = process.env.PORT || 3000;
