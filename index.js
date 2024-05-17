@@ -3,11 +3,13 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const db = require("./config");
 const userRoute = require('./routes/userRoute');
+const productRoute = require('./routes/productRoute');
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use('/user', userRoute);
+app.use('/product', productRoute);
   
 // Connect to MySQL database
 db.query('SELECT 1 + 1', (error, results, fields) => {
