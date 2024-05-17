@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const User = require("../models/userModel");
 const jwt = require('jsonwebtoken');
-const verifyToken = require('../middleware/auth');
+const secretKey = "electronicdeviceapp";
 
 // Register a new user
 module.exports = {
@@ -28,8 +28,6 @@ module.exports = {
     login: async (req, res) => {
       try {
         const { username, password } = req.body;
-        console.log(username);
-        console.log(password);
         const user = await User.findOne({ where: { username } });
         
         if (!user) {
@@ -41,10 +39,23 @@ module.exports = {
         if (!passwordMatch) {
           return res.status(401).json({ message: "Invalid username or password" });
         }
-        
-        
 
-        return res.status(200).json({ message: "Login successful", userId: user.userId });
+        const token = jwt.sign({ sub: user.userId }, secretKey);
+        if (passwordMatch) {
+          jwt.sign(
+            { username, id: user.userId },
+            secretKey,
+            {expiresIn: "1h"},
+            (err, token) => {
+              if (err) throw err;
+              res.cookie("token", token).json({
+                token: token,
+                id: user.userId,
+                username,
+              });
+            }
+          );
+        }
       } 
       
       catch (error) {
