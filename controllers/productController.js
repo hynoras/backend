@@ -1,5 +1,5 @@
 const express = require("express");
-const { Sequelize } = require("sequelize");
+const { Sequelize, where } = require("sequelize");
 const Product = require("../models/productModel");
 const Category = require("../models/categoryModel");
 
@@ -27,6 +27,20 @@ module.exports = {
 
         } catch (error) {
             res.status(500).json({ error: "Internal Server Error" });
+        }
+    },
+
+    retrieveOneProductById: async(req, res) => {
+        try {
+            const prodId = req.params.id;
+            const product = await Product.findOne({ prodId });
+            if (!product) {
+                return res.status(404).json({ message: 'Product not found' });
+            }
+            res.json(product);
+        } catch (error) {
+            console.error("Error retrieving product:", error);
+            res.status(500).json({ message: "Internal Server Error" });
         }
     },
 
