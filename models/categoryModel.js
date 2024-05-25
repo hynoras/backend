@@ -27,10 +27,13 @@ const Category = sequelize.define("Category", {
         model: Product,
         key: 'prodId',
     },
+      primaryKey: true,
     },
   }, {
     tableName: "Category",
     timestamps: false
   });
+
+  Product.hasMany(Category, { foreignKey: 'prodId' });
 
 module.exports = Category;
