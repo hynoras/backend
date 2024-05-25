@@ -4,12 +4,14 @@ const mysql = require('mysql');
 const db = require("./config");
 const userRoute = require('./routes/userRoute');
 const productRoute = require('./routes/productRoute');
+const cartDetailRoute = require('./routes/cartRoute');
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use('/user', userRoute);
 app.use('/product', productRoute);
+app.use('/cart', cartDetailRoute);
   
 // Connect to MySQL database
 db.query('SELECT 1 + 1', (error, results, fields) => {

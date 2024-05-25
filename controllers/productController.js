@@ -49,8 +49,7 @@ module.exports = {
 
         try {
             const { prodName, prodDesc, prodPrice, prodQuan, prodImg, catName } = req.body;
-        
-            // Create new user
+            
             const newProduct = await Product.create({ 
                 prodName, 
                 prodDesc, 
