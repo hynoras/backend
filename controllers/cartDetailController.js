@@ -19,7 +19,7 @@ module.exports = {
 
         try {
             const { currQuan } = req.body;
-            const { cartId, prodId } = req.params; // Get cartId and prodId from request params
+            const { cartId, prodId } = req.params;
 
             // Find the product price
             const product = await Product.findByPk(prodId);
