@@ -74,4 +74,23 @@ module.exports = {
             res.status(500).json({ message: "Internal Server Error" });
         }
     },
+
+    retrieveCartInfoById: async (req, res) => {
+        try {
+            const { cartId } = req.params;
+            let cartDetail = await CartDetail.findAll({ 
+                where: { cartId },
+            });
+
+            if (!cartDetail || cartDetail.length === 0) {
+                return res.status(404).json({ message: 'Cart not found', cartDetail: [] });
+            }
+
+            res.status(200).json({ cartDetail });
+
+        } catch (error) {
+            console.error("Error fetching cart:", error);
+            res.status(500).json({ message: "Internal Server Error" });
+        }
+    }
 };
