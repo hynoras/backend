@@ -1,9 +1,8 @@
-const Cart = require('../models/cartModel');
-const CartDetail = require('../models/cartDetailModel'); // assuming you have this model defined
+const Cart = require('../models/cartModel'); 
 
 module.exports = {
     getCartByUserId: async (req, res) => {
-        const userId = req.user.id; // This assumes you have user info in req.user
+        const userId = req.user.id;
         try {
             let cart = await Cart.findOne({ where: { userId } });
             if (!cart) {
