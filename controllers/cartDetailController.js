@@ -1,6 +1,5 @@
 const express = require('express');
 const { Sequelize } = require('sequelize');
-const Cart = require('../models/cartModel');
 const CartDetail = require('../models/cartDetailModel');
 const Product = require('../models/productModel');
 
