@@ -19,8 +19,7 @@ module.exports = {
         const transaction = await sequelize.transaction();
 
         try {
-            const { custName, custPhoneNo, shippingMethod, shippingAddr } = req.body;
-            const userId = req.user.id;
+            const { userId, custName, custPhoneNo, shippingMethod, shippingAddr } = req.body;
             const { cartId } = req.params;
 
             order = await PurchaseOrder.create({
